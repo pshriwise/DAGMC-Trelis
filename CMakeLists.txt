@@ -71,27 +71,6 @@ if(${BUILD_DAGMC_EXPORTER})
 endif()
 
 ###############################################################################
-# MCNP Importer
-###############################################################################
-if(${BUILD_MCNP_IMPORTER})
-    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_MCNP_IMPORT" )
-    set( BUILD_IGEOM ON)
-
-    include_directories("${CMAKE_SOURCE_DIR}/iGeom")
-
-    add_subdirectory(mcnp2cad)
-    include_directories(mcnp2cad)
-
-    set( MCNP2CAD_LIB "mcnp2cad")
-    set(MCNP_SRC
-        import_mcnp_cmd/MCNPImp.cpp
-        import_mcnp_cmd/MCNPImp.hpp)
-
-
-endif()
-
-
-###############################################################################
 # iGeom Tests
 ###############################################################################
 
@@ -120,7 +99,26 @@ if(${BUILD_IGEOM})
 
   add_library(iGeom SHARED ${IGEOM_SRC})
   target_link_libraries(iGeom cubit_geom ${CUBITI19})
+  set(IGEOM_LIB iGeom)
 
+endif()
+
+###############################################################################
+# MCNP Importer
+###############################################################################
+if(${BUILD_MCNP_IMPORTER})
+    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_MCNP_IMPORT" )
+    set( BUILD_IGEOM ON)
+
+    include_directories("${CMAKE_SOURCE_DIR}/iGeom")
+
+    add_subdirectory(mcnp2cad)
+    include_directories(mcnp2cad)
+
+    set( MCNP2CAD_LIB "mcnp2cad")
+    set(MCNP_SRC
+        import_mcnp_cmd/MCNPImp.cpp
+        import_mcnp_cmd/MCNPImp.hpp)
 
 
 endif()
